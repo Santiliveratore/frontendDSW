@@ -1,0 +1,62 @@
+<section class="flex justify-center items-center h-full bg-gray-100">
+    <div class="container mx-auto p-8 bg-white shadow-lg rounded-lg max-w-md my-10">
+      
+      <!-- Título -->
+      <h2 class="text-2xl font-semibold text-gray-800 text-center mb-6">Editar Producto</h2>
+  
+      <!-- Formulario reactivo -->
+      <form [formGroup]="productoForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data" class="space-y-6">
+  
+        <!-- Vista previa de la imagen -->
+        <div class="flex justify-center mb-4">
+          <div class="w-40 h-40 border border-gray-300 rounded-lg overflow-hidden flex items-center justify-center">
+            <!-- Muestra la nueva imagen seleccionada o la imagen original del producto -->
+            <img 
+              *ngIf="imagePreview; else showOriginalImage" 
+              [src]="imagePreview" 
+              alt="Vista previa" 
+              class="object-cover w-full h-full">
+            
+            <!-- Imagen original si no se ha seleccionado una nueva -->
+            <ng-template #showOriginalImage>
+              <img 
+                [src]="'http://localhost:3000/productos/' + producto?.foto" 
+                alt="Vista previa" 
+                class="object-cover w-full h-full">
+            </ng-template>
+          </div>
+        </div>
+  
+        <!-- Campo para nombre del producto -->
+        <div class="mb-4">
+          <label for="nombre" class="block text-sm font-semibold text-gray-700">Nombre del producto</label>
+          <input formControlName="nombre" id="nombre" type="text" class="mt-1 block w-full shadow-sm border border-gray-300 rounded-lg py-2 px-4 bg-gray-50 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm placeholder-gray-400" placeholder="{{producto?.nombre}}">
+        </div>
+  
+        <!-- Campo para descripción del producto -->
+        <div class="mb-4">
+          <label for="descripcion" class="block text-sm font-semibold text-gray-700">Descripción</label>
+          <textarea formControlName="descripcion" id="descripcion" rows="4" class="mt-1 block w-full shadow-sm border border-gray-300 rounded-lg py-2 px-4 bg-gray-50 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm placeholder-gray-400" placeholder="{{producto?.descripcion}}"></textarea>
+        </div>
+  
+  
+        <!-- Campo para imagen (selector de archivo) -->
+        <div class="mb-4">
+          <label for="foto" class="block text-sm font-semibold text-gray-700">Imagen del producto</label>
+          <input 
+            formControlName="foto"
+            type="file" 
+            id="foto" 
+            (change)="onFileSelected($event)" 
+            class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
+        </div>
+  
+        <!-- Botón para enviar el formulario -->
+        <div class="flex justify-center">
+          <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Guardar Cambios</button>
+        </div>
+        
+      </form>
+    </div>
+  </section>
+  

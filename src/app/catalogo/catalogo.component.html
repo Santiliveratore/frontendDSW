@@ -1,0 +1,82 @@
+<nav class="categorias-nav w-full">
+  <!-- Botón desplegable que solo aparece en móvil -->
+  <button (click)="dropdownOpen = !dropdownOpen" class="dropdown-btn">
+    Categorías
+  </button>
+
+  <!-- Lista de categorías con clase desplegable -->
+  <div class="dropdown-menu w-full md:flex md:justify-around md:space-x-4" [class.open]="dropdownOpen">
+    <a 
+      (click)="getProductos()" 
+      [ngClass]="{'active': selectedCategory === 'Todo'}"
+      class="categoria-item cursor-pointer text-gray-600 hover:text-blue-600 focus:text-blue-600 transition duration-300">
+      Todo
+    </a>
+    <a *ngFor="let categoria of categorias"
+      (click)="filtrarProductos(categoria.id)" 
+      [ngClass]="{'active': selectedCategory === categoria.id}"
+      class="categoria-item cursor-pointer text-gray-600 hover:text-blue-600 focus:text-blue-600 transition duration-300">
+      {{categoria.nombre}}
+    </a>
+  </div>
+</nav>
+
+
+
+
+
+
+<section class="text-gray-600 body-font">
+  <div class="container px-5 py-24 mx-auto">
+    <div class="flex flex-wrap -m-2"> 
+      <div class="lg:w-1/5 md:w-1/3 p-2 w-full" *ngFor="let producto of productos"> 
+        <div class="border border-gray-300 rounded-lg p-4 shadow-sm relative"> 
+          
+          <!-- Imagen del producto -->
+          <a class="block relative h-48 rounded overflow-hidden bg-white-200">
+            <img class="object-contain object-center w-full h-full" 
+                 [src]="'http://localhost:3000/productos/' + producto.foto" 
+                 alt="{{ producto.nombre }}">
+          </a>
+
+          <!-- Información del producto -->
+          <div class="mt-4 text-center"> 
+            <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">{{ producto.descripcion }} <br/><b>Producto {{producto.tipo.descripcion}}</b></h3>
+            
+            <h2 class="text-gray-900 title-font text-lg font-medium">{{ producto.nombre }}</h2>
+            <p class="mt-1">${{ producto.precio }}</p>
+
+            <!-- Sección para eliminar y editar producto (solo visible para admins) -->
+            <div *ngIf="isAdmin()" class="flex justify-center items-center mt-4">
+              <a routerLink="/editProducto/{{producto.id}}">
+                <button class="fa-solid fa-pen text-blue-500 text-xl mr-4 hover:text-blue-700 transition-transform transform hover:scale-110"></button>
+              </a>
+              <button class="fa-solid fa-trash text-red-500 text-xl hover:text-red-700 transition-transform transform hover:scale-110" 
+                      (click)="eliminarProducto(producto.id, producto.foto)"></button>
+            </div>
+
+            <!-- Sección para agregar al carrito -->
+            <div *ngIf="isAdmin() === false" class="flex justify-center items-center mt-4 relative">
+              <button (click)="agregarAlCarrito(producto, 1)"
+                      class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded flex items-center focus:outline-none transition-transform transform hover:scale-105">
+                <span class="mr-2">Agregar al carrito</span>
+                <i class="fa-solid fa-cart-plus"></i>
+              </button>
+              
+              <!-- Badge con la cantidad -->
+              <span *ngIf="obtenerCantidadProductoEnCarrito(producto.id) > 0"
+                    class="cantidad-badge flex items-center justify-center">
+                {{ obtenerCantidadProductoEnCarrito(producto.id) }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+

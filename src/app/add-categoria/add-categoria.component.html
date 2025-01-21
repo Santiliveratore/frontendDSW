@@ -1,0 +1,31 @@
+<section class="flex justify-center items-center min-h-screen bg-gray-100">
+    <div class="container mx-auto p-8 bg-white shadow-lg rounded-lg max-w-md mt-1">
+      
+      <!-- Título -->
+      <h2 class="text-2xl font-semibold text-gray-800 text-center mb-6">Agregar Nueva Categoría</h2>
+  
+      <!-- Formulario -->
+      <form [formGroup]="categoriaForm" (ngSubmit)="onSubmit()" class="space-y-6">
+        
+        <!-- Campo para nombre de la categoría -->
+        <div class="mb-4">
+          <label for="nombre" class="block text-sm font-semibold text-gray-700">Nombre de la categoría</label>
+          <input formControlName="nombre" id="nombre" type="text" class="mt-1 block w-full shadow-sm border border-gray-300 rounded-lg py-2 px-4 bg-gray-50 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm placeholder-gray-400" placeholder="Escribe el nombre de la categoría">
+          <div *ngIf="categoriaForm.get('nombre')?.invalid && categoriaForm.get('nombre')?.touched" class="text-red-500 text-sm mt-1">
+            <span *ngIf="categoriaForm.get('nombre')?.errors?.['required']">El campo nombre es obligatorio.</span>
+          </div>
+        </div>
+  
+        <!-- Botón para agregar categoría -->
+        <div class="flex justify-center">
+          <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Agregar Categoría</button>
+        </div>
+  
+        <p *ngIf="errorMessage" class="text-red-500 mt-3">{{ errorMessage }}</p>
+        <p *ngIf="successMessage" class="justify-center text-green-500 mt-3">{{ successMessage }}</p>
+  
+      </form>
+    </div>
+  </section>
+  
+  

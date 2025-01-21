@@ -1,0 +1,35 @@
+<header class="text-gray-600 body-font relative z-10">
+  <div>
+    <a class="logo" routerLink="" ng-reflect-router-link="" href="">
+      <img src="https://www.logotypes101.com/logos/283/501E380BD95F595995F17CF495BCA882/LogoUTN_nvgsb.png" width="30%" height="3%">
+      <div class="brand-name">SuperUTN</div>
+    </a>
+  </div>
+  <div *ngIf="!isLoggedIn(); else loggedInBlock" class="auth-buttons">
+    <button><a routerLink="/logIn">Iniciar Sesión</a></button>
+    <button><a routerLink="/signUp">Registrarse</a></button>
+  </div>
+
+  <ng-template #loggedInBlock>
+    <div class="user-info">
+      <b>Bienvenido, {{ usuario?.nombre }} {{ usuario?.apellido }}</b>
+      <a *ngIf="!isAdmin()" routerLink="/carrito" class="text-gray-700 ml-14 hover:text-gray-900 transition-colors">
+        <i class="fa-solid fa-shopping-cart text-2xl"></i>
+      </a>
+      <span *ngIf="isAdmin()" class="admin-badge">Admin</span>
+      <div class="dropdown relative" (click)="toggleDropdown()">
+        <i class="fas fa-bars"></i> <!-- Ícono de menú -->
+        <div *ngIf="dropdownOpen" class="dropdown-menu absolute bg-white shadow-lg rounded-md mt-2 w-40 z-50">
+          <a *ngIf="isAdmin()" routerLink="/addProducto" class="block px-4 py-2 text-gray-700 hover:bg-gray-200">Agregar Producto</a>
+          <a *ngIf="isAdmin()" routerLink="/pedidosAdmin" class="block px-4 py-2 text-gray-700 hover:bg-gray-200">Ver Pedidos</a>
+          <a *ngIf="isAdmin()" routerLink="/addCategoria" class="block px-4 py-2 text-gray-700 hover:bg-gray-200">Agregar Categoria</a>
+          <a *ngIf="!isAdmin()" routerLink="/pedidos" class="block px-4 py-2 text-gray-700 hover:bg-gray-200">Mis Pedidos</a>
+          <a (click)="logOut()" class="block px-4 py-2 text-gray-700 hover:bg-gray-200 cursor-pointer">Cerrar Sesión</a>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</header>
+
+
+

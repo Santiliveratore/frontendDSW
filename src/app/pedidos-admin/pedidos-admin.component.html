@@ -1,0 +1,60 @@
+<div class="min-h-screen bg-gray-50 py-12">
+    <div class="max-w-5xl mx-auto px-4">
+      <h1 class="text-4xl font-bold text-center mb-10 text-gray-900">Pedidos Administrador</h1>
+  
+      <div class="grid grid-cols-2 gap-8">
+        <!-- Columna de pedidos Pendientes -->
+        <div>
+          <h2 class="text-2xl font-semibold text-gray-700 mb-4">Pendientes</h2>
+          <div *ngIf="pedidosPendientes.length === 0" class="text-center text-gray-500 text-lg">
+            No hay pedidos pendientes.
+          </div>
+          <div *ngFor="let pedido of pedidosPendientes" class="bg-white rounded-lg shadow p-6 mb-6">
+            <div class="flex justify-between items-center mb-4">
+              <div>
+                <h3 class="text-lg font-semibold text-gray-700">Pedido #{{ pedido.id }}</h3>
+                <p class="text-sm text-gray-500">Fecha: {{ pedido.fecha | date: 'short' }}</p>
+                <p class="text-sm text-gray-500">Usuario: {{ pedido.usuario.nombre }} {{ pedido.usuario.apellido }}</p>
+                <p class="text-sm text-gray-500">Localidad: {{ pedido.usuario.localidad.nombre }}</p>
+              </div>
+              <div class="bg-blue-100 rounded-lg p-3 flex flex-col justify-center items-center w-24">
+                <h4 class="text-sm font-medium text-blue-700">Monto Total</h4>
+                <p class="text-3xl font-bold text-blue-800">${{ pedido.monto }}</p>
+              </div>
+            </div>
+            <button
+              class="w-full bg-blue-500 text-white font-bold py-2 rounded hover:bg-blue-600"
+              (click)="marcarComoEntregado(pedido.id)"
+            >
+              Marcar como Entregado
+            </button>
+          </div>
+        </div>
+  
+        <!-- Columna de pedidos Entregados -->
+        <div>
+          <h2 class="text-2xl font-semibold text-gray-700 mb-4">Entregados</h2>
+          <div *ngIf="pedidosEntregados.length === 0" class="text-center text-gray-500 text-lg">
+            No hay pedidos entregados.
+          </div>
+          <div *ngFor="let pedido of pedidosEntregados" class="bg-white rounded-lg shadow p-6 mb-6">
+            <div class="flex justify-between items-center mb-4">
+              <div>
+                <h3 class="text-lg font-semibold text-gray-700">Pedido #{{ pedido.id }}</h3>
+                <p class="text-sm text-gray-500">Fecha: {{ pedido.fecha | date: 'short' }}</p>
+                <p class="text-sm text-gray-500">Usuario: {{ pedido.usuario.nombre }} {{ pedido.usuario.apellido }}</p>
+                <p class="text-sm text-gray-500">Localidad: {{ pedido.usuario.localidad.nombre }}</p>
+              </div>
+              <div class="bg-green-100 rounded-lg p-3 flex flex-col justify-center items-center w-24">
+                <h4 class="text-sm font-medium text-green-700">Monto Total</h4>
+                <p class="text-3xl font-bold text-green-800">${{ pedido.monto }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  

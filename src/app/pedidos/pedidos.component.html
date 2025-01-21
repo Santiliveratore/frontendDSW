@@ -1,0 +1,47 @@
+<div class="min-h-screen bg-gray-50 py-12">
+  <div class="max-w-3xl mx-auto px-4">
+    <h1 class="text-4xl font-bold text-center mb-10 text-gray-900">Mis Pedidos</h1>
+
+    <div *ngIf="pedidos.length === 0" class="text-center text-gray-500 text-lg">
+      No has realizado ningún pedido aún.
+    </div>
+
+    <div *ngFor="let pedido of pedidos" class="bg-white rounded-lg shadow p-6 mb-8">
+      <div class="flex justify-between items-center mb-4">
+        <div>
+          <h2 class="text-lg font-semibold text-gray-700">Pedido:</h2>
+          <p class="text-sm text-gray-500">Fecha: {{ pedido.fecha | date: 'short' }}</p>
+        </div>
+        <div class="bg-blue-100 rounded-lg p-3 flex flex-col justify-center items-center w-25 h-25">
+          <h3 class="text-sm font-medium text-blue-700">Monto Total</h3>
+          <p class="text-3xl font-bold text-blue-800">${{ pedido.monto }}</p>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-200 pt-4">
+        <h3 class="text-lg font-semibold text-gray-700 mb-3">Detalles del Pedido:</h3>
+        <ul class="space-y-3">
+          <li *ngFor="let detalle of pedido.detalles" class="flex justify-between items-center text-gray-600 bg-gray-200 p-2 rounded-lg shadow-sm">
+            <span class="font-medium text-gray-800">{{ detalle.producto.nombre }}</span>
+            <span class="text-sm text-gray-500">Cantidad: {{ detalle.cantidad }}</span>
+            <span class="font-semibold text-blue-700">${{ detalle.producto.precio * detalle.cantidad }}</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Botón para eliminar el pedido -->
+      <div class="flex justify-end mt-4">
+        <button (click)="eliminarPedido(pedido.id)" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-lg shadow">
+          Eliminar Pedido
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+  
